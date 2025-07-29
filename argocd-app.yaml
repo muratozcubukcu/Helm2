@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/muratozcubukcu/Helm2.git
     targetRevision: HEAD
-    path: Helm2
+    path: .
     helm:
       values: |
         replicaCount: 2
