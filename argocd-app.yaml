@@ -16,7 +16,7 @@ spec:
           tag: stable
         service:
           type: ClusterIP
-          port: 80
+          port: 8181
   destination:
     server: https://kubernetes.default.svc
     namespace: default
