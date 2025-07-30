@@ -1,0 +1,38 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "nginx-app.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "nginx-app.labels" . | nindent 4 }}
+  annotations:
+    {{- if .Values.certificate.enabled }}
+    cert-manager.io/cluster-issuer: {{ include "nginx-app.fullname" . }}-selfsigned-issuer
+    {{- end }}
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  {{- if .Values.ingress.className }}
+  ingressClassName: {{ .Values.ingress.className }}
+  {{- end }}
+  {{- if .Values.certificate.enabled }}
+  tls:
+  - hosts:
+    - {{ include "nginx-app.fullname" . }}.{{ .Release.Namespace }}.svc
+    secretName: {{ include "nginx-app.fullname" . }}-tls
+  {{- end }}
+  rules:
+  - host: {{ include "nginx-app.fullname" . }}.{{ .Release.Namespace }}.svc
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ include "nginx-app.fullname" . }}
+            port:
+              number: {{ .Values.service.port }}
+{{- end }} 

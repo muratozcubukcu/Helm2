@@ -10,6 +10,17 @@ image:
 service:
   type: ClusterIP
   port: 8181
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations: {}
+
+certificate:
+  enabled: true
+  issuer:
+    name: selfsigned
+    kind: ClusterIssuer
   
 resources:
   limits:

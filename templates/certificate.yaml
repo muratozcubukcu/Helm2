@@ -1,0 +1,17 @@
+{{- if .Values.certificate.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ include "nginx-app.fullname" . }}-tls
+  namespace: {{ .Release.Namespace }}
+  labels:
+    {{- include "nginx-app.labels" . | nindent 4 }}
+spec:
+  secretName: {{ include "nginx-app.fullname" . }}-tls
+  issuerRef:
+    name: {{ include "nginx-app.fullname" . }}-selfsigned-issuer
+    kind: ClusterIssuer
+  dnsNames:
+  - {{ include "nginx-app.fullname" . }}.{{ .Release.Namespace }}.svc
+  - {{ include "nginx-app.fullname" . }}.{{ .Release.Namespace }}.svc.cluster.local
+{{- end }} 

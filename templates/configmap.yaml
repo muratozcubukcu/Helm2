@@ -22,31 +22,10 @@ data:
         server_name localhost;
         
         location / {
-          return 200 '<!DOCTYPE html>
-    <html>
-    <head>
-        <title>Cluster Info</title>
-        <style>
-            body { font-family: Arial, sans-serif; margin: 40px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
-            .container { max-width: 600px; margin: 0 auto; text-align: center; }
-            .cluster-name { font-size: 2.5em; margin: 20px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-            .info { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin: 20px 0; }
-            .timestamp { font-size: 0.9em; opacity: 0.8; }
-        </style>
-    </head>
-    <body>
-        <div class="container">
-            <h1>Welcome to Nginx!</h1>
-            <div class="cluster-name">Cluster: {{ .Values.clusterName | default "Unknown" }}</div>
-            <div class="info">
-                <p>This page is served by Nginx running in your Kubernetes cluster.</p>
-                <p>Deployed via ArgoCD with Helm</p>
-            </div>
-            <div class="timestamp">Generated at: {{ now | date "2006-01-02 15:04:05" }}</div>
-        </div>
-    </body>
-    </html>';
-          add_header Content-Type text/html;
+          return 200 'Cluster: {{ .Values.clusterName | default "Unknown" }}
+Pod: $hostname
+Time: {{ now | date "2006-01-02 15:04:05" }}';
+          add_header Content-Type text/plain;
         }
       }
     } 

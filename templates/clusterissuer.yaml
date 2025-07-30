@@ -1,0 +1,8 @@
+{{- if .Values.certificate.enabled }}
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ include "nginx-app.fullname" . }}-selfsigned-issuer
+spec:
+  selfSigned: {}
+{{- end }} 
