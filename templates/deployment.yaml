@@ -21,5 +21,13 @@ spec:
         ports:
         - containerPort: 80
           protocol: TCP
+        volumeMounts:
+        - name: nginx-config
+          mountPath: /etc/nginx/nginx.conf
+          subPath: nginx.conf
         resources:
           {{- toYaml .Values.resources | nindent 10 }}
+      volumes:
+      - name: nginx-config
+        configMap:
+          name: {{ include "nginx-app.fullname" . }}-config

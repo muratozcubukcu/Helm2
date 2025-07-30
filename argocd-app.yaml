@@ -12,6 +12,7 @@ spec:
     helm:
       values: |
         replicaCount: 2
+        clusterName: "production-cluster"
         image:
           tag: stable
         service:
