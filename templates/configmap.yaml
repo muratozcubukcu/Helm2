@@ -22,9 +22,7 @@ data:
         server_name localhost;
         
         location / {
-          return 200 'Cluster: {{ .Values.clusterName | default "Unknown" }}
-Pod: $hostname
-Time: {{ now | date "2006-01-02 15:04:05" }}';
+          return 200 'Cluster: {{ .Values.clusterName | default "Unknown" }}\nPod: $hostname\nTime: {{ now | date "2006-01-02 15:04:05" }}';
           add_header Content-Type text/plain;
         }
       }
