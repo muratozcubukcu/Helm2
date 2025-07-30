@@ -3,13 +3,13 @@ kind: Service
 metadata:
   name: {{ include "nginx-app.fullname" . }}
   labels:
-    app: nginx
+    {{- include "nginx-app.labels" . | nindent 4 }}
 spec:
-  type: {{include "nginx-deployment.fullname" .}}
+  type: {{ .Values.service.type }}
   ports:
-  - port: 80
+  - port: {{ .Values.service.port }}
     targetPort: 80
     protocol: TCP
     name: http
   selector:
-    app: nginx
+    {{- include "nginx-app.selectorLabels" . | nindent 4 }}
